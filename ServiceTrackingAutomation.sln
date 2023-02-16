@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Domain", "1. Domain", "{0A6ECC83-75DE-4503-843A-88EA92FD8FDB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Infrastructure", "2. Infrastructure", "{EAEE7008-2034-463E-B8D5-DFCABA6A69A4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Application", "3. Application", "{13E7F6A3-4539-4A9F-AC01-FAD28274DE12}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Interface", "4. Interface", "{931BD77D-E605-4B95-9767-1A4D9ECD10CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceTrackingAutomation.Domain", "src\ServiceTrackingAutomation.Domain\ServiceTrackingAutomation.Domain.csproj", "{075F85DA-9025-43C3-9D03-94A0E9EE8AC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceTrackingAutomation.Infrastructure", "src\ServiceTrackingAutomation.Infrastructure\ServiceTrackingAutomation.Infrastructure.csproj", "{55DEFBBA-64E3-4ACC-9EB9-5DB34447AF31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceTrackingAutomation.Application", "src\ServiceTrackingAutomation.Application\ServiceTrackingAutomation.Application.csproj", "{40BE9EC0-42B2-4A89-A176-3782C76B62F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceTrackingAutomation.App", "src\ServiceTrackingAutomation.App\ServiceTrackingAutomation.App.csproj", "{6A14887A-0CE1-4412-A04D-410134642D76}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{075F85DA-9025-43C3-9D03-94A0E9EE8AC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{075F85DA-9025-43C3-9D03-94A0E9EE8AC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{075F85DA-9025-43C3-9D03-94A0E9EE8AC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{075F85DA-9025-43C3-9D03-94A0E9EE8AC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55DEFBBA-64E3-4ACC-9EB9-5DB34447AF31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55DEFBBA-64E3-4ACC-9EB9-5DB34447AF31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55DEFBBA-64E3-4ACC-9EB9-5DB34447AF31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55DEFBBA-64E3-4ACC-9EB9-5DB34447AF31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40BE9EC0-42B2-4A89-A176-3782C76B62F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40BE9EC0-42B2-4A89-A176-3782C76B62F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40BE9EC0-42B2-4A89-A176-3782C76B62F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40BE9EC0-42B2-4A89-A176-3782C76B62F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A14887A-0CE1-4412-A04D-410134642D76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A14887A-0CE1-4412-A04D-410134642D76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A14887A-0CE1-4412-A04D-410134642D76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A14887A-0CE1-4412-A04D-410134642D76}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{075F85DA-9025-43C3-9D03-94A0E9EE8AC8} = {0A6ECC83-75DE-4503-843A-88EA92FD8FDB}
+		{55DEFBBA-64E3-4ACC-9EB9-5DB34447AF31} = {EAEE7008-2034-463E-B8D5-DFCABA6A69A4}
+		{40BE9EC0-42B2-4A89-A176-3782C76B62F3} = {13E7F6A3-4539-4A9F-AC01-FAD28274DE12}
+		{6A14887A-0CE1-4412-A04D-410134642D76} = {931BD77D-E605-4B95-9767-1A4D9ECD10CD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8749F584-C159-451E-BA3B-B74F987C27F7}
+	EndGlobalSection
+EndGlobal

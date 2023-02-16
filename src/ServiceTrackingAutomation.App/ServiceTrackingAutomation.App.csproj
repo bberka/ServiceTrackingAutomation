@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceTrackingAutomation.Application\ServiceTrackingAutomation.Application.csproj" />
+    <ProjectReference Include="..\ServiceTrackingAutomation.Infrastructure\ServiceTrackingAutomation.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EasMe">
+      <HintPath>..\..\..\easme-lib\bin\Release\net6.0\EasMe.dll</HintPath>
+    </Reference>
+    <Reference Include="EasMe.Logging">
+      <HintPath>..\..\..\easme-lib\bin\Release\net6.0\EasMe.Logging.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
