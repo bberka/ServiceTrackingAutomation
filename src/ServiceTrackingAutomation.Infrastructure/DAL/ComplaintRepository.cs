@@ -3,7 +3,7 @@ using ServiceTrackingAutomation.Domain.Entities;
 
 namespace ServiceTrackingAutomation.Infrastructure.DAL;
 
-public class ComplaintRepository : GenericRepository<Complaint,BusinessDbContext>
+internal class ComplaintRepository : GenericRepository<Complaint,BusinessDbContext>
 {
     public ComplaintRepository(BusinessDbContext context) : base(context)
     {

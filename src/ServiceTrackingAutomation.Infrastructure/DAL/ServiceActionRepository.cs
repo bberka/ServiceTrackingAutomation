@@ -3,7 +3,7 @@ using ServiceTrackingAutomation.Domain.Entities;
 
 namespace ServiceTrackingAutomation.Infrastructure.DAL;
 
-public class ServiceActionRepository : GenericRepository<ServiceAction,BusinessDbContext>
+internal class ServiceActionRepository : GenericRepository<ServiceAction,BusinessDbContext>
 {
     public ServiceActionRepository(BusinessDbContext context) : base(context)
     {

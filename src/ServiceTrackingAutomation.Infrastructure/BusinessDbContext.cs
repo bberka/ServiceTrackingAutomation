@@ -9,7 +9,7 @@ using ServiceTrackingAutomation.Domain.Entities;
 
 namespace ServiceTrackingAutomation.Infrastructure
 {
-    public class BusinessDbContext : DbContext
+    internal class BusinessDbContext : DbContext
     {
         private static readonly IEasLog logger = EasLogFactory.CreateLogger();
 
