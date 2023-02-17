@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using EasMe.EntityFrameworkCore;
 
 namespace ServiceTrackingAutomation.Domain.Entities;
 
 [PrimaryKey(nameof(ComplaintId),nameof(ProductId))]
-public class ComplaintProduct
+public class ComplaintProduct : IEntity
 {
     public int ComplaintId { get; set; }
     public int ProductId { get; set; }

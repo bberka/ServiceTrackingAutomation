@@ -11,35 +11,31 @@ namespace ServiceTrackingAutomation.Application.Manager
 {
     public class ServiceManager : IServiceManager
     {
-        private readonly BusinessDbContext _dbContext;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ServiceManager(BusinessDbContext dbContext)
+        public ServiceManager(IUnitOfWork unitOfWork)
         {
-            _dbContext = dbContext;
+            _unitOfWork = unitOfWork;
         }
 
         public ResultData<ServiceDto> GetService(int id)
         {
-            var service = _dbContext.Services
-                .Where(x => x.IsValid == true)
-                .Include(x => x.ServiceAction)
-                .Select(x => new ServiceDto()
-                {
-                    Name = x.Name,
-                    Address = x.Address,
-                    Id = x.Id,
-                    PhoneNumber = x.PhoneNumber
-                })
-                .FirstOrDefault();
+            var service = _unitOfWork.ServiceRepository.GetFirstOrDefault(x => x.IsValid == true,nameof(ServiceAction));
+               
             if(service is null) return Result.Warn(1,"Servis bulunamadı");
-            return service;
+            return new ServiceDto
+            {
+                Name = service.Name,
+                Address = service.Address,
+                Id = service.Id,
+                PhoneNumber = service.PhoneNumber
+            };
         }
 
         public List<ServiceDto> GetServices()
         {
-            return _dbContext.Services
-                .Where(x => x.IsValid == true)
-                .Include(x => x.ServiceAction)
+            return _unitOfWork.ServiceRepository
+                .Get(x => x.IsValid == true,includeProperties: nameof(ServiceAction))
                 .Select(x => new ServiceDto()
                 {
                     Address = x.Address,
@@ -52,7 +48,7 @@ namespace ServiceTrackingAutomation.Application.Manager
 
         public Result UpdateService(ServiceDto serviceDto)
         {
-            var existing = _dbContext.Services.Find(serviceDto.Id);
+            var existing = _unitOfWork.ServiceRepository.GetById(serviceDto.Id);
             if (existing is null)
             {
                 return Result.Warn(1, "Servis bulunamadı");
@@ -65,8 +61,8 @@ namespace ServiceTrackingAutomation.Application.Manager
             existing.Address = serviceDto.Address;
             existing.Name = serviceDto.Name;
             existing.PhoneNumber = serviceDto.PhoneNumber;
-            _dbContext.Services.Update(existing);
-            return _dbContext.SaveChangesResult(3,nameof(UpdateService));
+            _unitOfWork.ServiceRepository.Update(existing);
+            return _unitOfWork.SaveResult(3,nameof(UpdateService));
         }
 
         public Result AddService(ServiceDto serviceDto)
@@ -78,13 +74,13 @@ namespace ServiceTrackingAutomation.Application.Manager
                 Name = serviceDto.Name,
                 PhoneNumber = serviceDto.PhoneNumber,
             };
-            _dbContext.Services.Add(service);
-            return _dbContext.SaveChangesResult(1);
+            _unitOfWork.ServiceRepository.Insert(service);
+            return _unitOfWork.SaveResult(1);
         }
 
         public Result DisableService(int id)
         {
-            var service =  _dbContext.Services.Find(id);
+            var service =  _unitOfWork.ServiceRepository.GetById(id);
             if (service is null)
             {
                 return Result.Warn(1, "Servis bulunamadı");
@@ -95,24 +91,24 @@ namespace ServiceTrackingAutomation.Application.Manager
                 return Result.Warn(2, "Servis zaten geçersiz");
             }
             service.IsValid = false;
-            _dbContext.Update(service);
-            return _dbContext.SaveChangesResult(3);
+            _unitOfWork.ServiceRepository.Update(service);
+            return _unitOfWork.SaveResult(3);
         }
 
         public Result DeleteService(int id)
         {
-            var service = _dbContext.Services.Find(id);
+            var service = _unitOfWork.ServiceRepository.GetById(id);
             if (service is null)
             {
                 return Result.Warn(1, "Servis bulunamadı");
             }
-            _dbContext.Remove(service);
-            return _dbContext.SaveChangesResult(2);
+            _unitOfWork.ServiceRepository.Delete(service);
+            return _unitOfWork.SaveResult(2);
         }
 
         public Result EnableService(int id)
         {
-            var service = _dbContext.Services.Find(id);
+            var service = _unitOfWork.ServiceRepository.GetById(id);
             if (service is null)
             {
                 return Result.Warn(1, "Servis bulunamadı");
@@ -123,8 +119,8 @@ namespace ServiceTrackingAutomation.Application.Manager
                 return Result.Warn(2, "Servis zaten geçersiz");
             }
             service.IsValid = true;
-            _dbContext.Update(service);
-            return _dbContext.SaveChangesResult(3);
+            _unitOfWork.ServiceRepository.Update(service);
+            return _unitOfWork.SaveResult(3);
         }
     }
 

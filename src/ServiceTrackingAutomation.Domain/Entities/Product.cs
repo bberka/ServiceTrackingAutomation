@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using EasMe.EntityFrameworkCore;
 
 namespace ServiceTrackingAutomation.Domain.Entities;
 
-public class Product
+public class Product : IEntity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -1,25 +1,21 @@
-﻿using EasMe;
-using EasMe.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+﻿using EasMe.Models;
 using ServiceTrackingAutomation.Domain.Abstract;
 using ServiceTrackingAutomation.Domain.DTOs;
 using ServiceTrackingAutomation.Domain.Entities;
-using ServiceTrackingAutomation.Infrastructure;
 
 namespace ServiceTrackingAutomation.Application.Manager;
 
 public class UserManager : IUserManager
 {
-    private readonly BusinessDbContext _dbContext;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UserManager(BusinessDbContext dbContext)
+    public UserManager(IUnitOfWork unitOfWork)
     {
-        _dbContext = dbContext;
+        _unitOfWork = unitOfWork;
     }
     public ResultData<User> GetUser(int id)
     {
-        var user = _dbContext.Users.FirstOrDefault(x => x.Id == id);
+        var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.Id == id);
         if (user is null)
         {
             return Result.Warn(1, "Kullanıcı bulunamadı");
@@ -33,7 +29,7 @@ public class UserManager : IUserManager
 
     public ResultData<User> GetUserByEmail(string email)
     {
-        var user = _dbContext.Users.FirstOrDefault(x => x.EmailAddress == email);
+        var user = _unitOfWork.UserRepository.GetFirstOrDefault(x => x.EmailAddress == email);
         if (user is null)
         {
             return Result.Warn(1, "Kullanıcı bulunamadı");
@@ -55,8 +51,8 @@ public class UserManager : IUserManager
         var user = userResult.Data;
         user.EmailAddress = dto.EmailAddress;
         user.Role = dto.Role;
-        _dbContext.Update(user);
-        return _dbContext.SaveChangesResult(1);
+        _unitOfWork.UserRepository.Update(user);
+        return _unitOfWork.SaveResult(1);
     }
 
     public Result DeleteUser(int id)
@@ -67,8 +63,8 @@ public class UserManager : IUserManager
             return userResult.ToResult(100);
         }
         var user = userResult.Data;
-        _dbContext.Remove(user);
-        return _dbContext.SaveChangesResult(1);
+        _unitOfWork.UserRepository.Delete(user);
+        return _unitOfWork.SaveResult(1);
     }
 
     public Result DisableUser(int id)
@@ -80,13 +76,13 @@ public class UserManager : IUserManager
         }
         var user = userResult.Data;
         user.IsValid = false;
-        _dbContext.Update(user);
-        return _dbContext.SaveChangesResult(1);
+        _unitOfWork.UserRepository.Update(user);
+        return _unitOfWork.SaveResult(1);
     }
 
     public Result EnableUser(int id)
     {
-        var user = _dbContext.Users.Find(id);
+        var user = _unitOfWork.UserRepository.GetById(id);
         if (user is null)
         {
             return Result.Warn(1, "Kullanıcı bulunamadı");
@@ -97,7 +93,7 @@ public class UserManager : IUserManager
             return Result.Warn(2, "Kullanıcı zaten geçerli");
         }
         user.IsValid = true;
-        _dbContext.Update(user);
-        return _dbContext.SaveChangesResult(3);
+        _unitOfWork.UserRepository.Update(user);
+        return _unitOfWork.SaveResult(3);
     }
 }

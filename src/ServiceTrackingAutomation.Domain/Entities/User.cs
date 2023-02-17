@@ -1,10 +1,11 @@
 ﻿using ServiceTrackingAutomation.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EasMe.EntityFrameworkCore;
 
 namespace ServiceTrackingAutomation.Domain.Entities;
 
-public class User
+public class User : IEntity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
