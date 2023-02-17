@@ -1,3 +1,4 @@
+using ServiceTrackingAutomation.Application;
 using ServiceTrackingAutomation.Application.Manager;
 using ServiceTrackingAutomation.Domain.Abstract;
 using ServiceTrackingAutomation.Domain.Entities;
@@ -25,10 +26,9 @@ builder.Services.AddDistributedMemoryCache();
 
 
 
-builder.Services.AddDbContext<BusinessDbContext>();
-builder.Services.AddScoped<IAuthManager, AuthManager>();
-builder.Services.AddScoped<IUserManager, UserManager>();
-builder.Services.AddScoped<IServiceManager, ServiceManager>();
+builder.Services.AddDataAccessLayer();
+builder.Services.AddBusinessDependency();
+
 
 
 var app = builder.Build();
