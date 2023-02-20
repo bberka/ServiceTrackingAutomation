@@ -1,6 +1,7 @@
 ﻿using EasMe;
 using EasMe.Extensions;
 using EasMe.Models;
+using EasMe.Result;
 using ServiceTrackingAutomation.Domain.Abstract;
 using ServiceTrackingAutomation.Domain.Entities;
 using ServiceTrackingAutomation.Domain.Models;

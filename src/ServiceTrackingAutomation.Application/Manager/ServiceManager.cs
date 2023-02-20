@@ -1,11 +1,7 @@
-﻿using EasMe.Extensions;
-using EasMe.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
+﻿using EasMe.Models;
 using ServiceTrackingAutomation.Domain.Abstract;
 using ServiceTrackingAutomation.Domain.DTOs;
 using ServiceTrackingAutomation.Domain.Entities;
-using ServiceTrackingAutomation.Infrastructure;
 
 namespace ServiceTrackingAutomation.Application.Manager
 {
@@ -21,7 +17,7 @@ namespace ServiceTrackingAutomation.Application.Manager
         public ResultData<ServiceDto> GetService(int id)
         {
             var service = _unitOfWork.ServiceRepository.GetFirstOrDefault(x => x.IsValid == true,nameof(ServiceAction));
-               
+            
             if(service is null) return Result.Warn(1,"Servis bulunamadı");
             return new ServiceDto
             {
@@ -35,7 +31,7 @@ namespace ServiceTrackingAutomation.Application.Manager
         public List<ServiceDto> GetServices()
         {
             return _unitOfWork.ServiceRepository
-                .Get(x => x.IsValid == true,includeProperties: nameof(ServiceAction))
+                .Get(x => x.IsValid == true,null,x => x.ServiceAction)
                 .Select(x => new ServiceDto()
                 {
                     Address = x.Address,

@@ -1,7 +1,4 @@
-﻿using EasMe.Models;
-using ServiceTrackingAutomation.Domain.Abstract;
-using ServiceTrackingAutomation.Domain.DTOs;
-using ServiceTrackingAutomation.Domain.Entities;
+﻿
 
 namespace ServiceTrackingAutomation.Application.Manager;
 

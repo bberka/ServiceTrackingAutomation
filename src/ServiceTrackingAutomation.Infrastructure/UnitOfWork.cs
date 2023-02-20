@@ -1,14 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using EasMe.EntityFrameworkCore.V2;
-using EasMe.Extensions;
-using EasMe.Logging;
-using EasMe.Models;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using ServiceTrackingAutomation.Domain.Abstract;
-using ServiceTrackingAutomation.Domain.Entities;
-using ServiceTrackingAutomation.Infrastructure.DAL;
+﻿
 
 namespace ServiceTrackingAutomation.Infrastructure;
 

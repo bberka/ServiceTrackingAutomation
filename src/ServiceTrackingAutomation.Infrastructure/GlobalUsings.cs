@@ -1,0 +1,13 @@
+﻿global using EasMe.EntityFrameworkCore.V2;
+global using ServiceTrackingAutomation.Domain.Entities;
+global using EasMe.Extensions;
+global using EasMe.Logging;
+global using EasMe.Models;
+global using Microsoft.EntityFrameworkCore;
+global using ServiceTrackingAutomation.Domain.Abstract;
+global using ServiceTrackingAutomation.Infrastructure.DAL;
+global using System.Runtime.CompilerServices;
+global using EasMe.Models;
+global using EasMe.Result;
+global using ServiceTrackingAutomation.Domain.DTOs;
+global using ServiceTrackingAutomation.Domain.Entities;
