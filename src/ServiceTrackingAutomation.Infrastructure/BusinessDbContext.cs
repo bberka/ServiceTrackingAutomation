@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols;
 using ServiceTrackingAutomation.Domain.Entities;
-
+using EasMe;
 namespace ServiceTrackingAutomation.Infrastructure
 {
     internal class BusinessDbContext : DbContext
@@ -16,8 +16,10 @@ namespace ServiceTrackingAutomation.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["ServiceDb"].ConnectionString);
+            optionsBuilder.UseSqlServer(EasConfig.GetConnectionString("ServiceDb"));
+#if DEBUG
             optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
+#endif
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
