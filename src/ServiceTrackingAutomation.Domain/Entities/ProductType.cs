@@ -11,5 +11,6 @@ public class ProductType : IEntity
     public int Id { get; set; }
 
     [MaxLength(500)]
+    [Display(Name = "Açıklama")]
     public string Description { get; set; }
 }

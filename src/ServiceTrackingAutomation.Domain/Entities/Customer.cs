@@ -10,8 +10,14 @@ public class Customer : IEntity
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
+    [Display(Name = "Müşteri Adı")]
     public string Name { get; set; }
+    [Display(Name = "Müşteri Adresi")]
     public string Address { get; set; }
+
+    [Display(Name = "Geçerlilik")]
     public bool IsValid { get; set; }
-    public DateTime RegisterDate { get; set; }
+
+    [Display(Name = "Kayıt Tarihi")]
+    public DateTime RegisterDate { get; set; } = DateTime.Now;
 }

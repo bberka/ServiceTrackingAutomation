@@ -14,8 +14,8 @@ public class User : IEntity
     [Display(Name = "Geçerlilik")]
     public bool IsValid { get; set; }
 
-    [Display(Name = "Kayıt Tarihi")]
-    public DateTime RegisterDate { get; set; }
+    [Display(Name = "Kayıt Tarihi")] 
+    public DateTime RegisterDate { get; set; } = DateTime.Now;
 
     [EmailAddress]
     [MaxLength(256)]

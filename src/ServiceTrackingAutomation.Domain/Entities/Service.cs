@@ -12,16 +12,20 @@ public class Service : IEntity
 
 
     [MaxLength(128)]
+    [Display(Name = "Adı")]
     public string Name { get; set; }
 
 
     [MaxLength(1000)]
+    [Display(Name = "Adres")]
     public string Address { get; set; }
 
 
     [MaxLength(15)]
+    [Display(Name = "Telefon No")]
     public string PhoneNumber { get; set; }
 
+    [Display(Name = "Geçerlilik")]
     public bool IsValid { get; set; }
 
     public ServiceAction ServiceAction { get; set; }

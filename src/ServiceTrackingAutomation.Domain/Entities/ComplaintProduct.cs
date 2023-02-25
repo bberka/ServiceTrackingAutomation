@@ -8,7 +8,10 @@ namespace ServiceTrackingAutomation.Domain.Entities;
 [PrimaryKey(nameof(ComplaintId),nameof(ProductId))]
 public class ComplaintProduct : IEntity
 {
+    [Display(Name = "Şikayet")]
     public int ComplaintId { get; set; }
+
+    [Display(Name = "Ürün")]
     public int ProductId { get; set; }
 
 
