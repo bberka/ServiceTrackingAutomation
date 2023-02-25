@@ -7,31 +7,136 @@ public class UnitOfWork : IUnitOfWork
     private static readonly IEasLog logger = EasLogFactory.CreateLogger();
     public UnitOfWork()
     {
-        dbContext = new BusinessDbContext();
-        ChangeLogRepository = new ChangeLogRepository(dbContext);
-        ComplaintRepository = new ComplaintRepository(dbContext);
-        ComplaintProductRepository = new ComplaintProductRepository(dbContext);
-        CustomerRepository = new CustomerRepository(dbContext);
-        CustomerContactRepository = new CustomerContactRepository(dbContext);
-        ProductRepository = new ProductRepository(dbContext);
-        ProductTypeRepository = new ProductTypeRepository(dbContext);
-        ServiceRepository = new ServiceRepository(dbContext);
-        ServiceActionRepository = new ServiceActionRepository(dbContext);
-        UserRepository = new UserRepository(dbContext);
+        _dbContext = new();
     }
 
-    private readonly BusinessDbContext dbContext;
-    public IGenericRepository<ChangeLog> ChangeLogRepository { get; }
-    public IGenericRepository<Complaint> ComplaintRepository { get; }
-    public IGenericRepository<ComplaintProduct> ComplaintProductRepository { get; }
-    public IGenericRepository<Customer> CustomerRepository { get; }
-    public IGenericRepository<CustomerContact> CustomerContactRepository { get; }
-    public IGenericRepository<Product> ProductRepository { get; }
-    public IGenericRepository<ProductType> ProductTypeRepository { get; }
-    public IGenericRepository<Service> ServiceRepository { get; }
-    public IGenericRepository<ServiceAction> ServiceActionRepository { get; }
-    public IGenericRepository<User> UserRepository { get; }
-    
+    private readonly BusinessDbContext _dbContext;
+
+    public bool IsDisposed { get; private set; } = false;
+
+
+    #region REPOSITORIES
+    private IGenericRepository<ChangeLog>? _changeLogRepository;
+    public IGenericRepository<ChangeLog> ChangeLogRepository
+    {
+        get
+        {
+            _changeLogRepository ??= new ChangeLogRepository(_dbContext);
+            return _changeLogRepository;
+        }
+    }
+
+    private IGenericRepository<Complaint>? _complaintRepository;
+    public IGenericRepository<Complaint> ComplaintRepository
+    {
+        get
+        {
+            _complaintRepository ??= new ComplaintRepository(_dbContext);
+            return _complaintRepository;
+        }
+    }
+
+    private IGenericRepository<ComplaintProduct>? _complaintProductRepository;
+    public IGenericRepository<ComplaintProduct> ComplaintProductRepository
+    {
+        get
+        {
+            _complaintProductRepository ??= new ComplaintProductRepository(_dbContext);
+            return _complaintProductRepository;
+        }
+    }
+
+    private IGenericRepository<Customer>? _customerRepository;
+
+    public IGenericRepository<Customer> CustomerRepository
+    {
+        get
+        {
+            _customerRepository ??= new CustomerRepository(_dbContext);
+            return _customerRepository;
+        }
+    }
+
+    private IGenericRepository<CustomerContact>? _customerContactRepository;
+
+    public IGenericRepository<CustomerContact> CustomerContactRepository
+    {
+        get
+        {
+            _customerContactRepository ??= new CustomerContactRepository(_dbContext);
+            return _customerContactRepository;
+        }
+    }
+
+    private IGenericRepository<Product>? _productRepository;
+
+    public IGenericRepository<Product> ProductRepository
+    {
+        get
+        {
+            _productRepository ??= new ProductRepository(_dbContext);
+            return _productRepository;
+        }
+    }
+
+    private IGenericRepository<ProductType>? _productTypeRepository;
+
+    public IGenericRepository<ProductType> ProductTypeRepository
+    {
+        get
+        {
+            _productTypeRepository ??= new ProductTypeRepository(_dbContext);
+            return _productTypeRepository;
+        }
+    }
+
+    private IGenericRepository<Service>? _serviceRepository;
+
+    public IGenericRepository<Service> ServiceRepository
+    {
+        get
+        {
+
+            _serviceRepository ??= new ServiceRepository(_dbContext);
+            return _serviceRepository;
+
+        }
+    }
+
+
+    private IGenericRepository<ServiceAction>? _serviceActionRepository;
+
+    public IGenericRepository<ServiceAction> ServiceActionRepository
+    {
+        get
+        {
+            _serviceActionRepository ??= new ServiceActionRepository(_dbContext);
+            return _serviceActionRepository;
+        }
+    }
+
+    private IGenericRepository<User>? _userRepository;
+
+    public IGenericRepository<User> UserRepository
+    {
+        get
+        {
+            _userRepository ??= new UserRepository(_dbContext);
+            return _userRepository;
+
+        }
+    }
+
+
+    #endregion
+
+    public void Dispose()
+    {
+        if(IsDisposed) return;
+        IsDisposed = true;
+        _dbContext.Dispose();
+        GC.SuppressFinalize(this);
+    }
     public bool SaveBool()
     {
         return Save() > 0;
@@ -45,10 +150,10 @@ public class UnitOfWork : IUnitOfWork
     public int Save()
     {
         var entityNames = DetectChangedProperties();
-        using var transaction = dbContext.Database.BeginTransaction();
+        using var transaction = _dbContext.Database.BeginTransaction();
         try
         {
-            var affected = dbContext.SaveChanges();
+            var affected = _dbContext.SaveChanges();
             if (affected > 0)
             {
                 transaction.Commit();
@@ -76,7 +181,7 @@ public class UnitOfWork : IUnitOfWork
     /// <returns>Changed entity names</returns>
     private string DetectChangedProperties()
     {
-        var modifiedEntities = dbContext.ChangeTracker
+        var modifiedEntities = _dbContext.ChangeTracker
             .Entries()
             .Where(p => p.State == EntityState.Modified)
             .ToList();

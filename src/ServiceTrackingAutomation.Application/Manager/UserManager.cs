@@ -103,6 +103,11 @@ public class UserManager : IUserManager
         return _unitOfWork.UserRepository.Get(x => x.IsValid == true && x.Id != exceptUserId).ToList();
     }
 
+    public List<User> GetInvalidUsers()
+    {
+        return _unitOfWork.UserRepository.Get(x => x.IsValid == false).ToList();
+    }
+
     public Result ChangePassword(int userId, ChangePasswordModel model)
     {
         if (model.NewPassword != model.NewPasswordConfirm)

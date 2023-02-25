@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using EasMe.Logging;
 using Microsoft.AspNetCore.Mvc;
 using ServiceTrackingAutomation.App.Filters;
 using ServiceTrackingAutomation.Domain.Abstract;
@@ -13,6 +14,7 @@ namespace ServiceTrackingAutomation.App.Controllers
     public class ManagerController : Controller
     {
         private readonly IUserManager _userManager;
+        private static readonly IEasLog logger = EasLogFactory.CreateLogger();
 
         public ManagerController(IUserManager userManager)
         {

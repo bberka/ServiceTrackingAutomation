@@ -5,7 +5,7 @@ using ServiceTrackingAutomation.Domain.Entities;
 
 namespace ServiceTrackingAutomation.Domain.Abstract;
 
-public interface IUnitOfWork
+public interface IUnitOfWork : IDisposable
 {
     public IGenericRepository<ChangeLog> ChangeLogRepository { get; }
     public IGenericRepository<Complaint> ComplaintRepository { get; }
@@ -17,6 +17,7 @@ public interface IUnitOfWork
     public IGenericRepository<Service> ServiceRepository { get; }
     public IGenericRepository<ServiceAction> ServiceActionRepository { get; }
     public IGenericRepository<User> UserRepository { get; }
+    public bool IsDisposed { get; }
     int Save();
     bool SaveBool();
     Result SaveResult(ushort rv, [CallerMemberName] string operationName = "");

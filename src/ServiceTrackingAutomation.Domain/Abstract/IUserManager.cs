@@ -13,6 +13,7 @@ public interface IUserManager
     Result DisableUser(int id);
     Result EnableUser(int id);
     List<User> GetUsers(int exceptUserId);
+    List<User> GetInvalidUsers();
     Result ChangePassword(int userId, ChangePasswordModel model);
     Result CreateUser(User user);
 

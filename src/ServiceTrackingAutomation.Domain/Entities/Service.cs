@@ -11,6 +11,9 @@ public class Service : IEntity
     public int Id { get; set; }
 
 
+    [Display(Name = "Kayıt Tarihi")]
+    public DateTime RegisterDate { get; set; } = DateTime.Now;
+
     [MaxLength(128)]
     [Display(Name = "Adı")]
     public string Name { get; set; }
@@ -28,5 +31,5 @@ public class Service : IEntity
     [Display(Name = "Geçerlilik")]
     public bool IsValid { get; set; }
 
-    public ServiceAction ServiceAction { get; set; }
+    public virtual ServiceAction? ServiceAction { get; set; }
 }

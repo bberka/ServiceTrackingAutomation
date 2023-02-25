@@ -12,6 +12,7 @@ namespace ServiceTrackingAutomation.App.Controllers
     public class HomeController : Controller
     {
         private readonly IAuthManager _authManager;
+
         private static readonly IEasLog logger = EasLogFactory.CreateLogger(); 
         public HomeController(IAuthManager authManager)
         {

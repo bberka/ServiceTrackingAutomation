@@ -14,37 +14,24 @@ namespace ServiceTrackingAutomation.Application.Manager
             _unitOfWork = unitOfWork;
         }
 
-        public ResultData<ServiceDto> GetService(int id)
+        public ResultData<Service> GetService(int id)
         {
             var service = _unitOfWork.ServiceRepository.GetFirstOrDefault(x => x.IsValid == true,nameof(ServiceAction));
             
             if(service is null) return Result.Warn(1,"Servis bulunamadı");
-            return new ServiceDto
-            {
-                Name = service.Name,
-                Address = service.Address,
-                Id = service.Id,
-                PhoneNumber = service.PhoneNumber
-            };
+            return service;
         }
 
-        public List<ServiceDto> GetServices()
+        public List<Service> GetServices()
         {
             return _unitOfWork.ServiceRepository
-                .Get(x => x.IsValid == true,null,x => x.ServiceAction)
-                .Select(x => new ServiceDto()
-                {
-                    Address = x.Address,
-                    Id = x.Id,
-                    Name = x.Name,
-                    PhoneNumber = x.PhoneNumber
-                })
+                .Get(x => x.IsValid == true)
                 .ToList();
         }
 
-        public Result UpdateService(ServiceDto serviceDto)
+        public Result UpdateService(Service service)
         {
-            var existing = _unitOfWork.ServiceRepository.GetById(serviceDto.Id);
+            var existing = _unitOfWork.ServiceRepository.GetById(service.Id);
             if (existing is null)
             {
                 return Result.Warn(1, "Servis bulunamadı");
@@ -54,22 +41,15 @@ namespace ServiceTrackingAutomation.Application.Manager
             {
                 return Result.Warn(2, "Servis geçersiz");
             }
-            existing.Address = serviceDto.Address;
-            existing.Name = serviceDto.Name;
-            existing.PhoneNumber = serviceDto.PhoneNumber;
+            existing.Address = service.Address;
+            existing.Name = service.Name;
+            existing.PhoneNumber = service.PhoneNumber;
             _unitOfWork.ServiceRepository.Update(existing);
-            return _unitOfWork.SaveResult(3,nameof(UpdateService));
+            return _unitOfWork.SaveResult(3);
         }
 
-        public Result AddService(ServiceDto serviceDto)
+        public Result AddService(Service service)
         {
-            var service = new Service()
-            {
-                Address = serviceDto.Address,
-                IsValid = true,
-                Name = serviceDto.Name,
-                PhoneNumber = serviceDto.PhoneNumber,
-            };
             _unitOfWork.ServiceRepository.Insert(service);
             return _unitOfWork.SaveResult(1);
         }

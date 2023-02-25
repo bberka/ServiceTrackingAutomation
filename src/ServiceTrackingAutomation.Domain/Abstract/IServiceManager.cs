@@ -6,12 +6,11 @@ namespace ServiceTrackingAutomation.Domain.Abstract;
 
 public interface IServiceManager
 {
-    ResultData<ServiceDto> GetService(int id);
-    List<ServiceDto> GetServices();
-    Result UpdateService(ServiceDto service);
-    Result AddService(ServiceDto service);
+    ResultData<Service> GetService(int id);
+    List<Service> GetServices();
+    Result UpdateService(Service service);
+    Result AddService(Service service);
     Result DisableService(int id);
-    Result DeleteService(int id);
     Result EnableService(int id);
 
 }
