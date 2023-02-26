@@ -25,10 +25,18 @@ namespace ServiceTrackingAutomation.App.Filters
 			}
 			if(rolesAllowed.Length > 0)
 			{
-				var userRole = (RoleType)context.HttpContext.GetUser().Role;
-				if(!rolesAllowed.Any(x => x == userRole))
-				{
+                try
+                {
+                    var userRole = (RoleType)context.HttpContext.GetUser().Role;
+                    if (!rolesAllowed.Any(x => x == userRole))
+                    {
+                        context.Result = new RedirectResult("/");
+                    }
+                }
+                catch (Exception e)
+                {
                     context.Result = new RedirectResult("/");
+
                 }
 			}
 		}

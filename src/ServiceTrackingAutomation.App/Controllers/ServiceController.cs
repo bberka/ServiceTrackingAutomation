@@ -1,12 +1,15 @@
 ﻿using System.Net;
 using EasMe.Logging;
 using Microsoft.AspNetCore.Mvc;
+using ServiceTrackingAutomation.App.Filters;
 using ServiceTrackingAutomation.Domain.Abstract;
 using ServiceTrackingAutomation.Domain.DTOs;
 using ServiceTrackingAutomation.Domain.Entities;
 
 namespace ServiceTrackingAutomation.App.Controllers
 {
+    [AuthFilter]
+
     public class ServiceController : Controller
     {
         private readonly IServiceManager _serviceManager;
@@ -41,6 +44,7 @@ namespace ServiceTrackingAutomation.App.Controllers
         {
             if (!ModelState.IsValid)
             {
+                
                 return View(service);
             }
             var res = _serviceManager.AddService(service);

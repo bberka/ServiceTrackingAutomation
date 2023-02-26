@@ -35,13 +35,13 @@ public class User : IEntity
     {
         get
         {
-            switch (Role)
+            return Role switch
             {
-                case 1: return "Owner";
-                case 2: return "Admin";
-                case 3: return "User";
-                default: return "Geçersiz";
-            }
+                1 => "Owner",
+                2 => "Admin",
+                3 => "User",
+                _ => "Geçersiz"
+            };
         }
     }
 }

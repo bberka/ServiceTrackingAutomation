@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiceTrackingAutomation.Infrastructure;
 
@@ -11,9 +12,11 @@ using ServiceTrackingAutomation.Infrastructure;
 namespace ServiceTrackingAutomation.Infrastructure.Migrations
 {
     [DbContext(typeof(BusinessDbContext))]
-    partial class BusinessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230225170652_mig-4")]
+    partial class mig4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,24 +119,14 @@ namespace ServiceTrackingAutomation.Infrastructure.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("EmailAddress")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsValid")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RegisterDate")
                         .HasColumnType("datetime2");
@@ -141,6 +134,35 @@ namespace ServiceTrackingAutomation.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("ServiceTrackingAutomation.Domain.Entities.CustomerContact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Contact")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int>("ContactType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsValid")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CustomerContacts");
                 });
 
             modelBuilder.Entity("ServiceTrackingAutomation.Domain.Entities.Product", b =>
@@ -229,10 +251,10 @@ namespace ServiceTrackingAutomation.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComplaintId")
-                        .IsUnique();
+                    b.HasIndex("ComplaintId");
 
-                    b.HasIndex("ServiceId");
+                    b.HasIndex("ServiceId")
+                        .IsUnique();
 
                     b.ToTable("ServiceActions");
                 });
@@ -272,7 +294,7 @@ namespace ServiceTrackingAutomation.Infrastructure.Migrations
             modelBuilder.Entity("ServiceTrackingAutomation.Domain.Entities.Complaint", b =>
                 {
                     b.HasOne("ServiceTrackingAutomation.Domain.Entities.Customer", "Customer")
-                        .WithMany("Complaints")
+                        .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -283,7 +305,7 @@ namespace ServiceTrackingAutomation.Infrastructure.Migrations
             modelBuilder.Entity("ServiceTrackingAutomation.Domain.Entities.ComplaintProduct", b =>
                 {
                     b.HasOne("ServiceTrackingAutomation.Domain.Entities.Complaint", "Complaint")
-                        .WithMany("ComplaintProducts")
+                        .WithMany()
                         .HasForeignKey("ComplaintId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -299,17 +321,28 @@ namespace ServiceTrackingAutomation.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("ServiceTrackingAutomation.Domain.Entities.CustomerContact", b =>
+                {
+                    b.HasOne("ServiceTrackingAutomation.Domain.Entities.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("ServiceTrackingAutomation.Domain.Entities.ServiceAction", b =>
                 {
                     b.HasOne("ServiceTrackingAutomation.Domain.Entities.Complaint", "Complaint")
-                        .WithOne("ServiceAction")
-                        .HasForeignKey("ServiceTrackingAutomation.Domain.Entities.ServiceAction", "ComplaintId")
+                        .WithMany()
+                        .HasForeignKey("ComplaintId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ServiceTrackingAutomation.Domain.Entities.Service", "Service")
-                        .WithMany("ServiceActions")
-                        .HasForeignKey("ServiceId")
+                        .WithOne("ServiceAction")
+                        .HasForeignKey("ServiceTrackingAutomation.Domain.Entities.ServiceAction", "ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -318,22 +351,9 @@ namespace ServiceTrackingAutomation.Infrastructure.Migrations
                     b.Navigation("Service");
                 });
 
-            modelBuilder.Entity("ServiceTrackingAutomation.Domain.Entities.Complaint", b =>
-                {
-                    b.Navigation("ComplaintProducts");
-
-                    b.Navigation("ServiceAction")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ServiceTrackingAutomation.Domain.Entities.Customer", b =>
-                {
-                    b.Navigation("Complaints");
-                });
-
             modelBuilder.Entity("ServiceTrackingAutomation.Domain.Entities.Service", b =>
                 {
-                    b.Navigation("ServiceActions");
+                    b.Navigation("ServiceAction");
                 });
 #pragma warning restore 612, 618
         }

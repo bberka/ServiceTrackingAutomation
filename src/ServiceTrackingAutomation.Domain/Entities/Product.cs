@@ -10,8 +10,9 @@ public class Product : IEntity
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    [Display(Name = "Ürün Tipi")]
-    public int ProductClassId { get; set; }
+    [Display(Name = "Geçerlilik")]
+    public bool IsValid { get; set; }
+
 
     [MaxLength(128)]
     [Display(Name = "Ürün Adı")]
@@ -20,9 +21,6 @@ public class Product : IEntity
     [MaxLength(1000)]
     [Display(Name = "Açıklama")]
     public string? Description { get; set; }
-
-    //Virtual
-    public virtual ProductType ProductClass { get; set; }
-
+    
 
 }

@@ -26,7 +26,6 @@ public class ServiceAction : IEntity
     [Display(Name = "Servisten Gelme Tarihi")]
     public DateTime? ReceivedFromServiceDate { get; set; }
 
-
     //Virtual
     public virtual Complaint Complaint { get; set; }
     public virtual Service Service { get; set; }

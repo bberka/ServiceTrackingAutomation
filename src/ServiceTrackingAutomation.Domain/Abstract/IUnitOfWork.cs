@@ -11,9 +11,7 @@ public interface IUnitOfWork : IDisposable
     public IGenericRepository<Complaint> ComplaintRepository { get; }
     public IGenericRepository<ComplaintProduct> ComplaintProductRepository { get; }
     public IGenericRepository<Customer> CustomerRepository { get; }
-    public IGenericRepository<CustomerContact> CustomerContactRepository { get; }
     public IGenericRepository<Product> ProductRepository { get; }
-    public IGenericRepository<ProductType> ProductTypeRepository { get; }
     public IGenericRepository<Service> ServiceRepository { get; }
     public IGenericRepository<ServiceAction> ServiceActionRepository { get; }
     public IGenericRepository<User> UserRepository { get; }

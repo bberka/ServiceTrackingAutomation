@@ -57,16 +57,6 @@ public class UnitOfWork : IUnitOfWork
         }
     }
 
-    private IGenericRepository<CustomerContact>? _customerContactRepository;
-
-    public IGenericRepository<CustomerContact> CustomerContactRepository
-    {
-        get
-        {
-            _customerContactRepository ??= new CustomerContactRepository(_dbContext);
-            return _customerContactRepository;
-        }
-    }
 
     private IGenericRepository<Product>? _productRepository;
 
@@ -79,16 +69,6 @@ public class UnitOfWork : IUnitOfWork
         }
     }
 
-    private IGenericRepository<ProductType>? _productTypeRepository;
-
-    public IGenericRepository<ProductType> ProductTypeRepository
-    {
-        get
-        {
-            _productTypeRepository ??= new ProductTypeRepository(_dbContext);
-            return _productTypeRepository;
-        }
-    }
 
     private IGenericRepository<Service>? _serviceRepository;
 
@@ -187,7 +167,6 @@ public class UnitOfWork : IUnitOfWork
             .ToList();
 
         var entityNames = "";
-        var logs = new List<ChangeLog>();
         foreach (var change in modifiedEntities)
         {
             var entityName = change.Entity.GetType().Name;
@@ -204,10 +183,9 @@ public class UnitOfWork : IUnitOfWork
                     OldValue = originalValue,
                     NewValue = currentValue,
                 };
-                logs.Add(log);
+                ChangeLogRepository.Insert(log);
             }
         }
-        ChangeLogRepository.InsertRange(logs);
         return entityNames;
     }
 }

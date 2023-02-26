@@ -11,6 +11,10 @@ public static class BusinessDependencyProvider
         services.AddScoped<IAuthManager, AuthManager>();
         services.AddScoped<IUserManager, UserManager>();
         services.AddScoped<IServiceManager, ServiceManager>();
+        services.AddScoped<IProductManager, ProductManager>();
+        services.AddScoped<ICustomerManager, CustomerManager>();
+        services.AddScoped<IComplaintManager, ComplaintManager>();
+        services.AddScoped<IServiceActionManager, ServiceActionManager>();
         return services;
     }
 }

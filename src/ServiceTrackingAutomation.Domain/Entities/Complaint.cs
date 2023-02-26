@@ -32,6 +32,11 @@ public class Complaint : IEntity
     [Display(Name = "Müşteriye Ulaştığı Tarihi")]
     public DateTime? CustomerReceivedDate { get; set; }
 
+
     //Virtual
     public virtual Customer Customer { get; set; }
+    public virtual ServiceAction ServiceAction { get; set; }      
+    public virtual List<ComplaintProduct> ComplaintProducts { get; set; }
+
+
 }
