@@ -18,6 +18,10 @@ public class Product : IEntity
     [Display(Name = "Ürün Adı")]
     public string Name { get; set; }
 
+    [MaxLength(128)]
+    [Display(Name = "Ürün Kodu")]
+    public string? Code { get; set; }
+
     [MaxLength(1000)]
     [Display(Name = "Açıklama")]
     public string? Description { get; set; }

@@ -33,6 +33,14 @@ public class Complaint : IEntity
     public DateTime? CustomerReceivedDate { get; set; }
 
 
+    [Display(Name = "Müşterinin Yolladığı Kargo Takip No")]
+    [MaxLength(1000)]
+    public string? CargoTrackingNumberFromCustomer { get; set; }
+
+    [Display(Name = "Müşteriye Yollanan Kargo Takip No")]
+    [MaxLength(1000)]
+    public string? CargoTrackingNumberToCustomer { get; set; }
+
     //Virtual
     public virtual Customer Customer { get; set; }
     public virtual ServiceAction ServiceAction { get; set; }      

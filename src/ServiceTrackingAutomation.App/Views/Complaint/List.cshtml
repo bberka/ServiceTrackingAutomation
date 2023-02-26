@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ServiceTrackingAutomation.Domain.Entities.Complaint>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h2>Şikayetler</h2>
+
+<p>
+    <a asp-action="Create">Yeni Şikayet Oluştur</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegisterDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceivedFromCustomerDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SentToCustomerDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerReceivedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegisterDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceivedFromCustomerDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SentToCustomerDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerReceivedDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Düzenle", "Edit", new { id=item.Id }) |
+                    @Html.ActionLink("Detay", "Details", new { id=item.Id  }) |
+                    @Html.ActionLink("Sil", "Delete", new { id=item.Id  })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
