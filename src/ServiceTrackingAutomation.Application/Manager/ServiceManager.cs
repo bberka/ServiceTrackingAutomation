@@ -16,7 +16,7 @@ namespace ServiceTrackingAutomation.Application.Manager
 
         public ResultData<Service> GetService(int id)
         {
-            var service = _unitOfWork.ServiceRepository.GetFirstOrDefault(x => x.IsValid == true,nameof(ServiceAction));
+            var service = _unitOfWork.ServiceRepository.GetFirstOrDefault(x => x.IsValid == true);
             
             if(service is null) return Result.Warn(1,"Servis bulunamadı");
             return service;

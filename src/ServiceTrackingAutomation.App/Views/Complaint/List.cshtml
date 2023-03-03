@@ -4,69 +4,107 @@
     ViewData["Title"] = "List";
 }
 
-<h2>Şikayetler</h2>
 
-<p>
-    <a asp-action="Create">Yeni Şikayet Oluştur</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RegisterDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReceivedFromCustomerDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SentToCustomerDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerReceivedDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CustomerId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RegisterDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReceivedFromCustomerDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SentToCustomerDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CustomerReceivedDate)
-                </td>
-                <td>
-                    @Html.ActionLink("Düzenle", "Edit", new { id=item.Id }) |
-                    @Html.ActionLink("Detay", "Details", new { id=item.Id  }) |
-                    @Html.ActionLink("Sil", "Delete", new { id=item.Id  })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="card shadow mb-4">
+    <div class="card-header py-3 ">
+        <div class="row px-3">
+            <div class="d-flex justify-content-between">
+                <h2 class="m-0 font-weight-bold text-black">Şikayetler</h2>
+                <a asp-action="Create" class="btn btn-success ">Yeni Şikayet Oluştur</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <table class="table" id="my_DataTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Id)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CustomerId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Customer.PhoneNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.RegisterDate)
+                            </th>
+                            @*<th>
+                            @Html.DisplayNameFor(model => model.ReceivedFromCustomerDate)
+                            </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.SentToCustomerDate)
+                            </th>
+                            @*<th>
+                            @Html.DisplayNameFor(model => model.CustomerReceivedDate)
+                            </th>*@
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.CargoTrackingNumberToCustomer)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.ActionLink(@item.Customer.Name,"Details","Customer", new { id = @item.Customer.Id})
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Customer.PhoneNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RegisterDate)
+                                </td>
+                                @*<td>
+                            @Html.DisplayFor(modelItem => item.ReceivedFromCustomerDate)
+                            </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SentToCustomerDate)
+                                </td>
+                                @*<td>
+                            @Html.DisplayFor(modelItem => item.CustomerReceivedDate)
+                            </td>*@
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CargoTrackingNumberToCustomer)
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Menü
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            @Html.ActionLink("Düzenle", "Edit", new { id = item.Id }, new { @class = "dropdown-item text-success fw-bold" })
+                                            @Html.ActionLink("Detay", "Details", new { id = item.Id }, new { @class = "dropdown-item text-info fw-bold" })
+                                            <div class="dropdown-divider"></div>
+                                            @Html.ActionLink("Servis Hareketi Ekle/Düzenle", "Create","ServiceAction", new { complaintId = item.Id }, new { @class = "dropdown-item text-info fw-bold" })
+
+                                            <div class="dropdown-divider"></div>
+
+                                            @Html.ActionLink("Sil", "Delete", new { id = item.Id }, new { @class = "text-danger dropdown-item fw-bold" })
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

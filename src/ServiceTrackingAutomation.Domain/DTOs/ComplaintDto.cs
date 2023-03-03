@@ -10,10 +10,9 @@ public class ComplaintDto
     [Display(Name = "Müşteri")]
     public int CustomerId { get; set; }
 
-    [MaxLength(1000)]
+    [MaxLength(5000)]
     [Display(Name = "Açıklama")]
     public string Description { get; set; }
-
     
     [Display(Name = "Ürünlerin Müşteriden Alınma Tarihi")]
     public DateTime? ReceivedFromCustomerDate { get; set; }
@@ -23,16 +22,11 @@ public class ComplaintDto
 
     [Display(Name = "Ürünlerin Müşteriye Ulaştığı Tarihi")]
     public DateTime? CustomerReceivedDate { get; set; }
-
-    [Display(Name = "Ürünler")]
-    public List<int> ProductIds { get; set; }
-
-
-    [Display(Name = "Müşterinin Yolladığı Kargo Takip No")]
-    [MaxLength(1000)]
-    public string? CargoTrackingNumberFromCustomer { get; set; }
-
+    
     [Display(Name = "Müşteriye Yollanan Kargo Takip No")]
     [MaxLength(1000)]
     public string? CargoTrackingNumberToCustomer { get; set; }
+
+    //public List<int> ProductIds { get; set; }
+
 }

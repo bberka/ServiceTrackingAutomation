@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using ServiceTrackingAutomation.Domain.Abstract;
 using ServiceTrackingAutomation.Domain.Entities;
 using System.Net;
+using ServiceTrackingAutomation.App.Filters;
+using ServiceTrackingAutomation.Domain.Models;
 
 namespace ServiceTrackingAutomation.App.Controllers
 {
+    [AuthFilter]
     public class CustomerController : Controller
     {
         private readonly ICustomerManager _customerManager;
@@ -26,6 +29,7 @@ namespace ServiceTrackingAutomation.App.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            
             return View();
         }
 
@@ -43,6 +47,18 @@ namespace ServiceTrackingAutomation.App.Controllers
 
         [HttpGet]
         public IActionResult Edit(int id)
+        {
+            var res = _customerManager.GetCustomer(id);
+            if (res.IsFailure)
+            {
+                ModelState.AddModelError("", res.ErrorCode);
+                return View();
+            }
+            return View(res.Data);
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
         {
             var res = _customerManager.GetCustomer(id);
             if (res.IsFailure)

@@ -10,7 +10,7 @@ public class ComplaintManager : IComplaintManager
     }
     public List<Complaint> GetComplaints()
     {
-        return _unitOfWork.ComplaintRepository.ToList();
+        return _unitOfWork.ComplaintRepository.Get(null,nameof(Customer)).ToList();
     }
 
     public List<Complaint> GetCustomerComplaints(int customerId)
@@ -19,9 +19,28 @@ public class ComplaintManager : IComplaintManager
     }
 
 
-    public Result AddComplaint(Complaint complaint)
+    public Result AddComplaint(ComplaintDto data)
     {
+        var complaint = new Complaint()
+        {
+            CargoTrackingNumberToCustomer = data.CargoTrackingNumberToCustomer,
+            CustomerId = data.CustomerId,
+            CustomerReceivedDate = data.CustomerReceivedDate,
+            Description = data.Description,
+            ReceivedFromCustomerDate = DateTime.Now,
+            SentToCustomerDate = data.SentToCustomerDate,
+            RegisterDate = DateTime.Now
+        };
         _unitOfWork.ComplaintRepository.Insert(complaint);
+        //foreach (var id in data.ProductIds)
+        //{
+        //    var cp = new ComplaintProduct()
+        //    {
+        //        ComplaintId = complaint.Id,
+        //        ProductId = id
+        //    };
+        //    _unitOfWork.ComplaintProductRepository.Insert(cp);
+        //}
         return _unitOfWork.SaveResult(1);
     }
 
@@ -29,7 +48,7 @@ public class ComplaintManager : IComplaintManager
 
     public ResultData<Complaint> GetComplaint(int id)
     {
-        var complaint = _unitOfWork.ComplaintRepository.Get(x => x.Id == id).FirstOrDefault();
+        var complaint = _unitOfWork.ComplaintRepository.Get(x => x.Id == id,nameof(Customer)).FirstOrDefault();
         if (complaint == null)
         {
             return Result.Warn(1, "Şikayet bulunamadı");

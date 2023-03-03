@@ -1,4 +1,4 @@
-﻿@model ServiceTrackingAutomation.Domain.DTOs.ComplaintDto
+﻿@model ServiceTrackingAutomation.Domain.Models.CreateComplaintViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,46 +13,23 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <input asp-for="CustomerId" class="form-control" />
-                <span asp-validation-for="CustomerId" class="text-danger"></span>
+                <label asp-for="Dto.CustomerId" class="control-label"></label>
+                <select class="form-control" asp-for="Dto.CustomerId">
+                    <option value="-1" selected disabled >Müşteri Seçiniz</option>
+                    @foreach (var item in Model.Customers)
+                    {
+                        <option value="@item.Id" >@item.Name : @item.PhoneNumber</option>
+                    }
+                </select>
+                <span asp-validation-for="Dto.CustomerId" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Dto.Description" class="control-label"></label>
+                <textarea rows="10" asp-for="Dto.Description" class="form-control" ></textarea>
+                <span asp-validation-for="Dto.Description" class="text-danger"></span>
             </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="ReceivedFromCustomerDate" class="control-label"></label>
-                <input asp-for="ReceivedFromCustomerDate" class="form-control" />
-                <span asp-validation-for="ReceivedFromCustomerDate" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="SentToCustomerDate" class="control-label"></label>
-                <input asp-for="SentToCustomerDate" class="form-control" />
-                <span asp-validation-for="SentToCustomerDate" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="CustomerReceivedDate" class="control-label"></label>
-                <input asp-for="CustomerReceivedDate" class="form-control" />
-                <span asp-validation-for="CustomerReceivedDate" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="CargoTrackingNumberFromCustomer" class="control-label"></label>
-                <input asp-for="CargoTrackingNumberFromCustomer" class="form-control" />
-                <span asp-validation-for="CargoTrackingNumberFromCustomer" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="CargoTrackingNumberToCustomer" class="control-label"></label>
-                <input asp-for="CargoTrackingNumberToCustomer" class="form-control" />
-                <span asp-validation-for="CargoTrackingNumberToCustomer" class="text-danger"></span>
-            </div>
+            
             <br />
             <div class="form-group">
                 <input type="submit" value="Ekle" class="btn btn-primary" />

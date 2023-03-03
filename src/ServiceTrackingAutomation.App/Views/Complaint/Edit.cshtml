@@ -19,34 +19,34 @@
             <br/>
             <div class="form-group">
                 <label asp-for="CustomerId" class="control-label"></label>
-                <input asp-for="CustomerId" class="form-control" />
+                <input readonly value="@Model.Customer?.Name : @Model.Customer?.PhoneNumber" class="form-control" />
                 <span asp-validation-for="CustomerId" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea rows="10" asp-for="Description" class="form-control" ></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            
             <br />
             <div class="form-group">
-                <label asp-for="ReceivedFromCustomerDate" class="control-label"></label>
-                <input asp-for="ReceivedFromCustomerDate" class="form-control" />
-                <span asp-validation-for="ReceivedFromCustomerDate" class="text-danger"></span>
+                <label asp-for="Note" class="control-label"></label>
+                <textarea rows="5" asp-for="Note" class="form-control"></textarea>
+                <span asp-validation-for="Note" class="text-danger"></span>
             </div>
             <br />
+            
             <div class="form-group">
                 <label asp-for="SentToCustomerDate" class="control-label"></label>
                 <input asp-for="SentToCustomerDate" class="form-control" />
                 <span asp-validation-for="SentToCustomerDate" class="text-danger"></span>
             </div>
-            <br />
+            @*<br />
             <div class="form-group">
                 <label asp-for="CustomerReceivedDate" class="control-label"></label>
                 <input asp-for="CustomerReceivedDate" class="form-control" />
                 <span asp-validation-for="CustomerReceivedDate" class="text-danger"></span>
-            </div>
+            </div>*@
             <br />
             <div class="form-group">
                 <input type="submit" value="Kaydet" class="btn btn-primary" />

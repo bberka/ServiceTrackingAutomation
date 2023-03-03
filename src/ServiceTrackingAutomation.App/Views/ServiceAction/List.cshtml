@@ -1,16 +1,15 @@
-﻿@model IEnumerable<ServiceTrackingAutomation.Domain.Entities.User>
+﻿@model IEnumerable<ServiceTrackingAutomation.Domain.Entities.ServiceAction>
 
 @{
     ViewData["Title"] = "List";
 }
 
-
 <div class="card shadow mb-4">
     <div class="card-header py-3 ">
         <div class="row px-3">
             <div class="d-flex justify-content-between">
-                <h2 class="m-0 font-weight-bold text-black">Kullanıcılar</h2>
-                <a asp-action="Create" class="btn btn-success ">Yeni Kullanıcı Ekle</a>
+                <h2 class="m-0 font-weight-bold text-black">Servis Hareketleri</h2>
+                @*<a asp-action="Create" class="btn btn-success ">Yeni Servis  Ekle</a>*@
             </div>
         </div>
     </div>
@@ -18,21 +17,25 @@
         <div class="row">
             <div class="col">
                 <table class="table" id="my_DataTable">
-
                     <thead>
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(model => model.Id)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.RegisterDate)
+                                @Html.DisplayNameFor(model => model.ComplaintId)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.EmailAddress)
+                                @Html.DisplayNameFor(model => model.ServiceId)
                             </th>
-
                             <th>
-                                @Html.DisplayNameFor(model => model.RoleString)
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SentToServiceDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ReceivedFromServiceDate)
                             </th>
                             <th></th>
                         </tr>
@@ -44,18 +47,23 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Id)
                                 </td>
+                                <td>
+                                    @Html.ActionLink(item.ComplaintId.ToString(),"Details","Complaint",new { id = item.ComplaintId})
+                                </td>
+                                <td>
+                                    @Html.ActionLink(item.ServiceId.ToString(),"Details","Service",new { id = item.ServiceId})
 
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RegisterDate)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.EmailAddress)
+                                    @Html.DisplayFor(modelItem => item.Description)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.RoleString)
+                                    @Html.DisplayFor(modelItem => item.SentToServiceDate)
                                 </td>
                                 <td>
-                                    
+                                    @Html.DisplayFor(modelItem => item.ReceivedFromServiceDate)
+                                </td>
+                                <td>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Menü
@@ -68,7 +76,6 @@
                                             @Html.ActionLink("Sil", "Delete", new { id = item.Id }, new { @class = "text-danger dropdown-item fw-bold" })
                                         </div>
                                     </div>
-
                                 </td>
                             </tr>
                         }

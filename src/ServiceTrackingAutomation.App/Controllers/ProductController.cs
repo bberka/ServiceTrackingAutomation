@@ -4,9 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using ServiceTrackingAutomation.App.Filters;
 using ServiceTrackingAutomation.Domain.Abstract;
 using ServiceTrackingAutomation.Domain.Entities;
-
+#if ENABLE_PRODUCT_LOGIC
 namespace ServiceTrackingAutomation.App.Controllers
 {
+
     [AuthFilter]
     public class ProductController : Controller
     {
@@ -101,3 +102,4 @@ namespace ServiceTrackingAutomation.App.Controllers
         }
     }
 }
+#endif
