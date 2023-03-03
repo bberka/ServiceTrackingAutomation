@@ -1,4 +1,6 @@
-﻿@model ServiceTrackingAutomation.Domain.Entities.Complaint
+﻿@using ServiceTrackingAutomation.Domain.Enums
+@using ServiceTrackingAutomation.Domain.Extensions
+@model ServiceTrackingAutomation.Domain.Entities.Complaint
 
 @{
     ViewData["Title"] = "Edit";
@@ -19,6 +21,8 @@
             <br/>
             <div class="form-group">
                 <label asp-for="CustomerId" class="control-label"></label>
+                <input asp-for="CustomerId" readonly value="@Model.CustomerId" class="form-control d-none" />
+
                 <input readonly value="@Model.Customer?.Name : @Model.Customer?.PhoneNumber" class="form-control" />
                 <span asp-validation-for="CustomerId" class="text-danger"></span>
             </div>
@@ -35,18 +39,24 @@
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
             <br />
-            
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select class="form-control" asp-for="Status">
+                    <option value="-1" disabled selected>Durum Seçiniz</option>
+                    @foreach (var item in Enum.GetNames(typeof(ComplaintStatus)))
+                    {
+                        var enumValue = (ComplaintStatus)Enum.Parse(typeof(ComplaintStatus), item);
+                        <option value="@((int)enumValue)">@enumValue.ToMessage()</option>
+                    }
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <br />
             <div class="form-group">
                 <label asp-for="SentToCustomerDate" class="control-label"></label>
                 <input asp-for="SentToCustomerDate" class="form-control" />
                 <span asp-validation-for="SentToCustomerDate" class="text-danger"></span>
             </div>
-            @*<br />
-            <div class="form-group">
-                <label asp-for="CustomerReceivedDate" class="control-label"></label>
-                <input asp-for="CustomerReceivedDate" class="form-control" />
-                <span asp-validation-for="CustomerReceivedDate" class="text-danger"></span>
-            </div>*@
             <br />
             <div class="form-group">
                 <input type="submit" value="Kaydet" class="btn btn-primary" />

@@ -10,7 +10,11 @@
         <div class="row px-3">
             <div class="d-flex justify-content-between">
                 <h2 class="m-0 font-weight-bold text-black">Şikayetler</h2>
-                <a asp-action="Create" class="btn btn-success ">Yeni Şikayet Oluştur</a>
+                <div>
+                    <a asp-action="CreateComplaintAndCustomer" class="btn btn-success ">Yeni Şikayet ve Müşteri Oluştur</a>
+                    <a asp-action="Create" class="btn btn-success ">Yeni Şikayet Oluştur</a>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -35,15 +39,14 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.RegisterDate)
                             </th>
-                            @*<th>
-                            @Html.DisplayNameFor(model => model.ReceivedFromCustomerDate)
-                            </th>*@
+                            <th>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </th>
+                            
                             <th>
                                 @Html.DisplayNameFor(model => model.SentToCustomerDate)
                             </th>
-                            @*<th>
-                            @Html.DisplayNameFor(model => model.CustomerReceivedDate)
-                            </th>*@
+                            
 
                             <th>
                                 @Html.DisplayNameFor(model => model.CargoTrackingNumberToCustomer)
@@ -70,16 +73,14 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.RegisterDate)
                                 </td>
-                                @*<td>
-                            @Html.DisplayFor(modelItem => item.ReceivedFromCustomerDate)
-                            </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ComplaintStatusMessage)
+                                </td>
+                                
                                 <td>
                                     @Html.DisplayFor(modelItem => item.SentToCustomerDate)
                                 </td>
-                                @*<td>
-                            @Html.DisplayFor(modelItem => item.CustomerReceivedDate)
-                            </td>*@
-
+                                
                                 <td>
                                     @Html.DisplayFor(modelItem => item.CargoTrackingNumberToCustomer)
                                 </td>

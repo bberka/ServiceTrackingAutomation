@@ -1,8 +1,21 @@
+using EasMe.Logging;
 using ServiceTrackingAutomation.Application;
 using ServiceTrackingAutomation.Application.Manager;
 using ServiceTrackingAutomation.Domain.Abstract;
 using ServiceTrackingAutomation.Domain.Entities;
 using ServiceTrackingAutomation.Infrastructure;
+
+EasLogFactory.Configure(x =>
+{
+    x.ExceptionHideSensitiveInfo = false;
+    x.AddRequestUrlToStart = true;
+    x.LogFileName = "ServiceApp_";
+    x.SeparateLogLevelToFolder = false;
+    x.MinimumLogLevel = LogSeverity.DEBUG;
+
+});
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 

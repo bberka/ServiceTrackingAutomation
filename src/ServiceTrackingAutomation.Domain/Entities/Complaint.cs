@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using EasMe.EntityFrameworkCore;
+using ServiceTrackingAutomation.Domain.Enums;
+using ServiceTrackingAutomation.Domain.Extensions;
 
 namespace ServiceTrackingAutomation.Domain.Entities;
 
@@ -23,10 +25,10 @@ public class Complaint : IEntity
     public string? Note { get; set; }
 
     [Display(Name = "Kayıt Tarihi")]
-
     public DateTime RegisterDate { get; set; } = DateTime.Now;
 
-
+    [Display(Name = "Şikayet Durumu")]
+    public int Status { get; set; } = (int)ComplaintStatus.ReceivedFromCustomer;
     [Display(Name = "Müşteriden Alınma Tarihi")]
     public DateTime? ReceivedFromCustomerDate { get; set; }
 
@@ -42,10 +44,14 @@ public class Complaint : IEntity
     [MaxLength(1000)]
     public string? CargoTrackingNumberToCustomer { get; set; }
 
+
     //Virtual
     public virtual Customer Customer { get; set; }
     public virtual ServiceAction ServiceAction { get; set; }      
     public virtual List<ComplaintProduct> ComplaintProducts { get; set; }
 
 
+    //No Set
+    public ComplaintStatus ComplaintStatusEnum => (ComplaintStatus)Status;
+    public string ComplaintStatusMessage => ((ComplaintStatus)Status).ToMessage();
 }

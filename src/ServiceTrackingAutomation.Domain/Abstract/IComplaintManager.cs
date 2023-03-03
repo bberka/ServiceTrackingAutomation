@@ -1,4 +1,6 @@
-﻿namespace ServiceTrackingAutomation.Domain.Abstract;
+﻿using ServiceTrackingAutomation.Domain.Models;
+
+namespace ServiceTrackingAutomation.Domain.Abstract;
 
 public interface IComplaintManager
 {
@@ -9,4 +11,5 @@ public interface IComplaintManager
     Result DeleteComplaint(int id);
     Result UpdateComplaint(Complaint complaint);
 
+    Result CreateComplaintAndCustomer(CreateComplaintAndCustomerModel model);
 }

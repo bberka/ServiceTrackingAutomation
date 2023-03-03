@@ -1,0 +1,61 @@
+﻿@model ServiceTrackingAutomation.Domain.Models.CreateComplaintAndCustomerModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h2>Şikayet Oluştur</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateComplaintAndCustomer">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Customer.Name" class="control-label"></label>
+                <input asp-for="Customer.Name" class="form-control" />
+                <span asp-validation-for="Customer.Name" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Customer.Address" class="control-label"></label>
+                <input asp-for="Customer.Address" class="form-control" />
+                <span asp-validation-for="Customer.Address" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Customer.PhoneNumber" class="control-label"></label>
+                <input asp-for="Customer.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Customer.PhoneNumber" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label asp-for="Customer.EmailAddress" class="control-label"></label>
+                <input asp-for="Customer.EmailAddress" class="form-control" />
+                <span asp-validation-for="Customer.EmailAddress" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label asp-for="ComplaintDto.Description" class="control-label"></label>
+                <textarea rows="10" asp-for="ComplaintDto.Description" class="form-control" ></textarea>
+                <span asp-validation-for="ComplaintDto.Description" class="text-danger"></span>
+            </div>
+            
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Ekle" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+<div>
+    <a asp-action="List">Listeye Dön</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

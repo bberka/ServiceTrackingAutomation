@@ -1,12 +1,18 @@
-﻿namespace ServiceTrackingAutomation.Application.Manager;
+﻿using System.Runtime.CompilerServices;
+using ServiceTrackingAutomation.Domain.Models;
+
+namespace ServiceTrackingAutomation.Application.Manager;
 
 public class ComplaintManager : IComplaintManager
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICustomerManager _customerManager;
 
-    public ComplaintManager(IUnitOfWork unitOfWork)
+    public ComplaintManager(IUnitOfWork unitOfWork,
+        ICustomerManager customerManager)
     {
         _unitOfWork = unitOfWork;
+        _customerManager = customerManager;
     }
     public List<Complaint> GetComplaints()
     {
@@ -82,5 +88,28 @@ public class ComplaintManager : IComplaintManager
         complaintDb.Description = complaint.Description;
         _unitOfWork.ComplaintRepository.Update(complaintDb);
         return _unitOfWork.SaveResult(2);
+    }
+
+    public Result CreateComplaintAndCustomer(CreateComplaintAndCustomerModel model)
+    {
+        var lastId = _unitOfWork.CustomerRepository.GetFirstOrDefaultSelect(x => x.Id, null, x => x.OrderByDescending(y => y.RegisterDate));
+        model.Customer.IsValid = true;
+        _unitOfWork.CustomerRepository.Insert(model.Customer);
+        var complaint = new Complaint()
+        {
+            CargoTrackingNumberToCustomer = model.ComplaintDto.CargoTrackingNumberToCustomer,
+            CustomerId = lastId + 1,
+            CustomerReceivedDate = model.ComplaintDto.CustomerReceivedDate,
+            Description = model.ComplaintDto.Description,
+            ReceivedFromCustomerDate = DateTime.Now,
+            SentToCustomerDate = model.ComplaintDto.SentToCustomerDate,
+            RegisterDate = DateTime.Now,
+            Note = model.ComplaintDto.Note
+        };
+        var complaintResult = _unitOfWork.SaveResult(1);
+        if (complaintResult.IsFailure) return complaintResult;
+        _unitOfWork.ComplaintRepository.Insert(complaint);
+        return _unitOfWork.SaveResult(1);
+
     }
 }

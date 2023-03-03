@@ -5,6 +5,7 @@ public interface ICustomerManager
     List<Customer> GetCustomers();
     List<Customer> GetInvalidCustomers();
     Result AddCustomer(Customer customer);
+    Result AddCustomer(Customer customer,out int customerId);
     Result DisableCustomer(int id);
     Result EnableCustomer(int id);
     ResultData<Customer> GetCustomer(int id);

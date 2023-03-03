@@ -63,8 +63,7 @@ namespace ServiceTrackingAutomation.App.Controllers
             var res = _customerManager.GetCustomer(id);
             if (res.IsFailure)
             {
-                ModelState.AddModelError("", res.ErrorCode);
-                return View();
+                return StatusCode((int)HttpStatusCode.InternalServerError);
             }
             return View(res.Data);
         }

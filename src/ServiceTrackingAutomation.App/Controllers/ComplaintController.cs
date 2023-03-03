@@ -40,14 +40,30 @@ namespace ServiceTrackingAutomation.App.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var viewModel = new CreateComplaintViewModel();
+            var viewModel = new CreateComplaintModel();
             viewModel.Customers = _customerManager.GetCustomers();
             return View(viewModel);
         }
         [HttpPost]
-        public IActionResult Create(CreateComplaintViewModel model)
+        public IActionResult Create(CreateComplaintModel model)
         {
             var res = _complaintManager.AddComplaint(model.Dto);
+            if (res.IsFailure)
+            {
+                ModelState.AddModelError("", res.ErrorCode);
+                return View(model);
+            }
+            return RedirectToAction("List");
+        }
+        [HttpGet]
+        public IActionResult CreateComplaintAndCustomer()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateComplaintAndCustomer(CreateComplaintAndCustomerModel model)
+        {
+            var res = _complaintManager.CreateComplaintAndCustomer(model);
             if (res.IsFailure)
             {
                 ModelState.AddModelError("", res.ErrorCode);
@@ -100,10 +116,6 @@ namespace ServiceTrackingAutomation.App.Controllers
             if (res.IsFailure)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError);
-
-                //ModelState.AddModelError("", res.ErrorCode);
-                //return RedirectToAction("List");
-
             }
             return View(res.Data);
         }

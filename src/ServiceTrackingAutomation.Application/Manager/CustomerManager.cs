@@ -20,10 +20,15 @@ public class CustomerManager : ICustomerManager
 
     public Result AddCustomer(Customer customer)
     {
+        return AddCustomer(customer, out _);
+    }
+
+    public Result AddCustomer(Customer customer, out int customerId)
+    {
         customer.IsValid = true;
         _unitOfWork.CustomerRepository.Insert(customer);
+        customerId = customer.Id;
         return _unitOfWork.SaveResult(1);
-
     }
 
     public Result DisableCustomer(int id)
@@ -95,4 +100,6 @@ public class CustomerManager : ICustomerManager
         _unitOfWork.CustomerRepository.Update(customerDb);
         return _unitOfWork.SaveResult(2);
     }
+
+    
 }

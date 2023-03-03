@@ -13,7 +13,11 @@ public class ComplaintDto
     [MaxLength(5000)]
     [Display(Name = "Açıklama")]
     public string Description { get; set; }
-    
+
+    [MaxLength(5000)]
+    [Display(Name = "Servis Notu")]
+    public string? Note { get; set; }
+
     [Display(Name = "Ürünlerin Müşteriden Alınma Tarihi")]
     public DateTime? ReceivedFromCustomerDate { get; set; }
 
