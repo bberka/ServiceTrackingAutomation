@@ -12,4 +12,8 @@ public interface IComplaintManager
     Result UpdateComplaint(Complaint complaint);
 
     Result CreateComplaintAndCustomer(CreateComplaintAndCustomerModel model);
+    Result SentToCustomer(SentToCustomerModel model);
+    Result SentToService(ServiceUpdateModel model);
+    Result ReceivedFromService(ServiceUpdateModel model);
+
 }

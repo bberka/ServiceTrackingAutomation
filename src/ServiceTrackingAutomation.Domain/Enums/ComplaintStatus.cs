@@ -3,7 +3,7 @@
 public enum ComplaintStatus
 {
     ReceivedFromCustomer,
-    WillBeSentToService,
+    //WillBeSentToService,
     SentToService,
     ReceivedFromService,
     SentToCustomer,

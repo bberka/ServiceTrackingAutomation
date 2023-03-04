@@ -14,7 +14,6 @@ public static class BusinessDependencyProvider
         services.AddScoped<IProductManager, ProductManager>();
         services.AddScoped<ICustomerManager, CustomerManager>();
         services.AddScoped<IComplaintManager, ComplaintManager>();
-        services.AddScoped<IServiceActionManager, ServiceActionManager>();
         return services;
     }
 }

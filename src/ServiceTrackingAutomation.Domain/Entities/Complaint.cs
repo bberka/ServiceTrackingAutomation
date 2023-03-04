@@ -21,7 +21,7 @@ public class Complaint : IEntity
 
 
     [MaxLength(5000)]
-    [Display(Name = "Servis Notu")]
+    [Display(Name = "Şikayet Notu")]
     public string? Note { get; set; }
 
     [Display(Name = "Kayıt Tarihi")]
@@ -45,9 +45,22 @@ public class Complaint : IEntity
     public string? CargoTrackingNumberToCustomer { get; set; }
 
 
+    [Display(Name = "Servis No")]
+    public int? ServiceId { get; set; }
+
+    [MaxLength(5000)]
+    [Display(Name = "Servis Notu")]
+    public string? ServiceNote { get; set; }
+
+    [Display(Name = "Servise Yollama Tarihi")]
+    public DateTime? SentToServiceDate { get; set; }
+
+    [Display(Name = "Servisten Gelme Tarihi")]
+    public DateTime? ReceivedFromServiceDate { get; set; }
+
     //Virtual
+    public virtual Service? Service { get; set; }
     public virtual Customer Customer { get; set; }
-    public virtual ServiceAction ServiceAction { get; set; }      
     public virtual List<ComplaintProduct> ComplaintProducts { get; set; }
 
 

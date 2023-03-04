@@ -31,6 +31,4 @@ public class Service : IEntity
     [Display(Name = "Geçerlilik")]
     public bool IsValid { get; set; }
 
-    //Virtual
-    public virtual List<ServiceAction>? ServiceActions { get; set; }
 }

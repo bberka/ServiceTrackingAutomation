@@ -9,7 +9,7 @@ public static class EnumExtensions
         return status switch
         {
             ComplaintStatus.ReceivedFromCustomer => "Müşteriden Alındı",
-            ComplaintStatus.WillBeSentToService => "Servise Yollanacak",
+            //ComplaintStatus.WillBeSentToService => "Servise Yollanacak",
             ComplaintStatus.SentToService => "Servise Yollandı",
             ComplaintStatus.ReceivedFromService => "Servisten Alındı",
             ComplaintStatus.SentToCustomer => "Müşteriye Yollandı",

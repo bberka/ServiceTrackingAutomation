@@ -20,11 +20,26 @@
             </div>
             <br/>
             <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
+                <label asp-for="CustomerId" class="control-label"></label> Id: @Model.CustomerId
                 <input asp-for="CustomerId" readonly value="@Model.CustomerId" class="form-control d-none" />
 
                 <input readonly value="@Model.Customer?.Name : @Model.Customer?.PhoneNumber" class="form-control" />
                 <span asp-validation-for="CustomerId" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input readonly value="@Model.ComplaintStatusMessage" class="form-control " />
+
+                @* <select class="form-control" asp-for="Status">
+                    <option value="-1" disabled selected>Durum Seçiniz</option>
+                    @foreach (var item in Enum.GetNames(typeof(ComplaintStatus)))
+                    {
+                        var enumValue = (ComplaintStatus)Enum.Parse(typeof(ComplaintStatus), item);
+                        <option value="@((int)enumValue)">@enumValue.ToMessage()</option>
+                    }
+                </select>*@
+                <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
@@ -38,25 +53,38 @@
                 <textarea rows="5" asp-for="Note" class="form-control"></textarea>
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select class="form-control" asp-for="Status">
-                    <option value="-1" disabled selected>Durum Seçiniz</option>
-                    @foreach (var item in Enum.GetNames(typeof(ComplaintStatus)))
-                    {
-                        var enumValue = (ComplaintStatus)Enum.Parse(typeof(ComplaintStatus), item);
-                        <option value="@((int)enumValue)">@enumValue.ToMessage()</option>
-                    }
-                </select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <br />
+            
+            @*<br />
             <div class="form-group">
                 <label asp-for="SentToCustomerDate" class="control-label"></label>
                 <input asp-for="SentToCustomerDate" class="form-control" />
                 <span asp-validation-for="SentToCustomerDate" class="text-danger"></span>
+            </div>*@
+@*            <br />
+            <div class="form-group">
+                <label asp-for="ServiceNote" class="control-label"></label>
+                <textarea rows="5" asp-for="ServiceNote" class="form-control"></textarea>
+                <span asp-validation-for="ServiceNote" class="text-danger"></span>
             </div>
+            <br />
+
+            <div class="form-group">
+                <label asp-for="SentToServiceDate" class="control-label"></label>
+                <input asp-for="SentToServiceDate" class="form-control" />
+                <span asp-validation-for="SentToServiceDate" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="ReceivedFromServiceDate" class="control-label"></label>
+                <input asp-for="ReceivedFromServiceDate" class="form-control" />
+                <span asp-validation-for="ReceivedFromServiceDate" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="CargoTrackingNumberToCustomer" class="control-label"></label>
+                <input asp-for="CargoTrackingNumberToCustomer" class="form-control" />
+                <span asp-validation-for="CargoTrackingNumberToCustomer" class="text-danger"></span>
+            </div>*@
             <br />
             <div class="form-group">
                 <input type="submit" value="Kaydet" class="btn btn-primary" />

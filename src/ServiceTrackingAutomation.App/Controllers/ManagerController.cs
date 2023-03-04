@@ -45,6 +45,7 @@ namespace ServiceTrackingAutomation.App.Controllers
             if (result.IsFailure)
                 return StatusCode((int)HttpStatusCode.InternalServerError);
             return View(result.Data);
+
         }
 
         [HttpPost]

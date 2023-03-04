@@ -1,4 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
+using ServiceTrackingAutomation.Domain.Entities;
+using ServiceTrackingAutomation.Domain.Enums;
 using ServiceTrackingAutomation.Domain.Models;
 
 namespace ServiceTrackingAutomation.Application.Manager;
@@ -16,7 +18,7 @@ public class ComplaintManager : IComplaintManager
     }
     public List<Complaint> GetComplaints()
     {
-        return _unitOfWork.ComplaintRepository.Get(null,nameof(Customer)).ToList();
+        return _unitOfWork.ComplaintRepository.Get(null, nameof(Customer)).ToList();
     }
 
     public List<Complaint> GetCustomerComplaints(int customerId)
@@ -50,11 +52,11 @@ public class ComplaintManager : IComplaintManager
         return _unitOfWork.SaveResult(1);
     }
 
-   
+
 
     public ResultData<Complaint> GetComplaint(int id)
     {
-        var complaint = _unitOfWork.ComplaintRepository.Get(x => x.Id == id,nameof(Customer)).FirstOrDefault();
+        var complaint = _unitOfWork.ComplaintRepository.Get(x => x.Id == id, nameof(Customer)).FirstOrDefault();
         if (complaint == null)
         {
             return Result.Warn(1, "Şikayet bulunamadı");
@@ -81,11 +83,8 @@ public class ComplaintManager : IComplaintManager
             return complaintResult.ToResult(100);
         }
         var complaintDb = complaintResult.Data;
-        complaintDb.CustomerId = complaint.CustomerId;
-        complaintDb.CustomerReceivedDate = complaint.CustomerReceivedDate;
-        complaintDb.SentToCustomerDate = complaint.SentToCustomerDate;
-        complaintDb.ReceivedFromCustomerDate = complaint.ReceivedFromCustomerDate;
         complaintDb.Description = complaint.Description;
+        complaintDb.Note = complaint.Note;
         _unitOfWork.ComplaintRepository.Update(complaintDb);
         return _unitOfWork.SaveResult(2);
     }
@@ -112,4 +111,67 @@ public class ComplaintManager : IComplaintManager
         return _unitOfWork.SaveResult(1);
 
     }
+
+    public Result SentToCustomer(SentToCustomerModel model)
+    {
+        var complaintResult = GetComplaint(model.ComplaintId);
+
+        if (complaintResult.IsFailure)
+        {
+            return complaintResult.ToResult(100);
+        }
+        var complaint = complaintResult.Data;
+        if (complaint.ComplaintStatusEnum == ComplaintStatus.SentToService || complaint.ComplaintStatusEnum == ComplaintStatus.SentToCustomer)
+        {
+            return Result.Warn(1, "Şikayet durumu geçersiz");
+        }
+        complaint.SentToCustomerDate = DateTime.Now;
+        complaint.CargoTrackingNumberToCustomer = model.CargoTrackingNumberToCustomer;
+        complaint.Status = (int)ComplaintStatus.SentToCustomer;
+        _unitOfWork.ComplaintRepository.Update(complaint);
+        return _unitOfWork.SaveResult(1);
+
+    }
+
+    public Result SentToService(ServiceUpdateModel model)
+    {
+        var complaintResult = GetComplaint(model.ComplaintId);
+        if (complaintResult.IsFailure)
+        {
+            return complaintResult.ToResult(100);
+        }
+        var complaint = complaintResult.Data;
+        if (complaint.ComplaintStatusEnum != ComplaintStatus.ReceivedFromCustomer)
+        {
+            return Result.Warn(1, "Şikayet durumu geçersiz");
+        }
+        complaint.SentToServiceDate = DateTime.Now;
+        complaint.Status = (int)ComplaintStatus.SentToService;
+        complaint.ServiceNote = model.ServiceNote;
+        _unitOfWork.ComplaintRepository.Update(complaint);
+        return _unitOfWork.SaveResult(2);
+    }
+
+    public Result ReceivedFromService(ServiceUpdateModel model)
+    {
+        var complaintResult = GetComplaint(model.ComplaintId);
+        if (complaintResult.IsFailure)
+        {
+            return complaintResult.ToResult(100);
+        }
+        var complaint = complaintResult.Data;
+        if (complaint.ComplaintStatusEnum != ComplaintStatus.SentToService)
+        {
+            return Result.Warn(1, "Şikayet durumu geçersiz");
+        }
+        complaint.ReceivedFromServiceDate = DateTime.Now;
+        complaint.Status = (int)ComplaintStatus.ReceivedFromService;
+        complaint.ServiceNote = model.ServiceNote;
+        _unitOfWork.ComplaintRepository.Update(complaint);
+        return _unitOfWork.SaveResult(2);
+    }
+ 
+
+   
+   
 }

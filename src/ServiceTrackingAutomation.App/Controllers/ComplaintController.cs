@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using EasMe.Logging;
 using Microsoft.AspNetCore.Mvc;
+using ServiceTrackingAutomation.App.Filters;
 using ServiceTrackingAutomation.Application.Manager;
 using ServiceTrackingAutomation.Domain.Abstract;
 using ServiceTrackingAutomation.Domain.Entities;
@@ -8,6 +9,7 @@ using ServiceTrackingAutomation.Domain.Models;
 
 namespace ServiceTrackingAutomation.App.Controllers
 {
+    [AuthFilter]
     public class ComplaintController : Controller
     {
         private readonly IComplaintManager _complaintManager;
@@ -120,5 +122,73 @@ namespace ServiceTrackingAutomation.App.Controllers
             return View(res.Data);
         }
 
+        [HttpGet]
+        public IActionResult SentToCustomer(int id)
+        {
+            var model = new SentToCustomerModel()
+            {
+                ComplaintId = id,
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult SentToCustomer(SentToCustomerModel model)
+        {
+            var res = _complaintManager.SentToCustomer(model);
+            if (res.IsFailure)
+            {
+                ModelState.AddModelError("", res.ErrorCode);
+                return View(model);
+            }
+            return RedirectToAction("List");
+        }
+
+   
+
+        [HttpGet]
+        public IActionResult SentToService(int id)
+        {
+            var complaint = _complaintManager.GetComplaint(id);
+            if (complaint.IsFailure) return StatusCode(500);
+            var model = new ServiceUpdateModel()
+            {
+                ServiceNote = complaint.Data.ServiceNote,
+                ComplaintId = id,
+                Note = complaint.Data.Note,
+                Description = complaint.Data.Description,
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult SentToService(ServiceUpdateModel model)
+        {
+            var res = _complaintManager.SentToService(model);
+            if (res.IsFailure) return StatusCode(500);
+            return RedirectToAction("List");
+        }
+      
+
+        [HttpGet]
+        public IActionResult ReceivedFromService(int id)
+        {
+            var complaint = _complaintManager.GetComplaint(id);
+            if (complaint.IsFailure) return StatusCode(500);
+            var model = new ServiceUpdateModel()
+            {
+                ServiceNote = complaint.Data.ServiceNote,
+                ComplaintId = id,
+                Note = complaint.Data.Note,
+                Description = complaint.Data.Description,
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult ReceivedFromService(ServiceUpdateModel model)
+        {
+            var res = _complaintManager.ReceivedFromService(model);
+            if (res.IsFailure) return StatusCode(500);
+            return RedirectToAction("List");
+        }
     }
 }

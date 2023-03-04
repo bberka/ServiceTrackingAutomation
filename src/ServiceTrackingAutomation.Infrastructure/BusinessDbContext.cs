@@ -33,7 +33,6 @@ namespace ServiceTrackingAutomation.Infrastructure
         public DbSet<Customer> Customers { get; set; }
         //public DbSet<Product> Products { get; set; }
         public DbSet<Service> Services { get; set; }
-        public DbSet<ServiceAction> ServiceActions { get; set; }
         public DbSet<ChangeLog> ChangeLogs { get; set; }
         public DbSet<User> Users { get; set; }
 

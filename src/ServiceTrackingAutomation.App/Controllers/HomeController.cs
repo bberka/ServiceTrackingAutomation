@@ -9,6 +9,7 @@ using ServiceTrackingAutomation.Domain.Models;
 
 namespace ServiceTrackingAutomation.App.Controllers
 {
+
     public class HomeController : Controller
     {
         private readonly IAuthManager _authManager;

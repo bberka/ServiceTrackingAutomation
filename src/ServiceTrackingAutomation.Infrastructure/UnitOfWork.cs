@@ -84,17 +84,7 @@ public class UnitOfWork : IUnitOfWork
     }
 
 
-    private IGenericRepository<ServiceAction>? _serviceActionRepository;
-
-    public IGenericRepository<ServiceAction> ServiceActionRepository
-    {
-        get
-        {
-            _serviceActionRepository ??= new ServiceActionRepository(_dbContext);
-            return _serviceActionRepository;
-        }
-    }
-
+   
     private IGenericRepository<User>? _userRepository;
 
     public IGenericRepository<User> UserRepository

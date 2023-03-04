@@ -5,11 +5,11 @@ using ServiceTrackingAutomation.App.Filters;
 using ServiceTrackingAutomation.Domain.Abstract;
 using ServiceTrackingAutomation.Domain.DTOs;
 using ServiceTrackingAutomation.Domain.Entities;
+using ServiceTrackingAutomation.Domain.Enums;
 
 namespace ServiceTrackingAutomation.App.Controllers
 {
-    [AuthFilter]
-
+    [AuthFilter(RoleType.Owner, RoleType.Admin)]
     public class ServiceController : Controller
     {
         private readonly IServiceManager _serviceManager;
